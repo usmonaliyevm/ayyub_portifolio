@@ -1,0 +1,147 @@
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--timeline-h);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 0 var(--gutter);
+  background: color-mix(in srgb, var(--bg-deep) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  z-index: 50;
+}
+
+.tc,
+.end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.tcText {
+  min-width: 11ch;
+}
+
+.rec {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--amber) 25%, transparent);
+}
+
+.track {
+  position: relative;
+  height: 30px;
+  background: var(--surface);
+  border-radius: 4px;
+  overflow: hidden;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(10% - 1px),
+    var(--line-soft) calc(10% - 1px),
+    var(--line-soft) 10%
+  );
+}
+
+.clip {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  text-decoration: none;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: filter 160ms ease, border-color 160ms ease;
+}
+
+.clipVideo {
+  background: color-mix(in srgb, var(--amber) 28%, var(--surface));
+  border-color: color-mix(in srgb, var(--amber) 40%, transparent);
+}
+
+.clipCode {
+  background: color-mix(in srgb, var(--blue) 24%, var(--surface));
+  border-color: color-mix(in srgb, var(--blue) 40%, transparent);
+}
+
+.clip:hover {
+  filter: brightness(1.15);
+}
+
+.active.clipVideo {
+  border-color: var(--amber);
+}
+
+.active.clipCode {
+  border-color: var(--blue);
+}
+
+.clipLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--amber);
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+
+.playheadCap {
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 12px;
+  height: 8px;
+  background: var(--amber);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@media (max-width: 640px) {
+  .end {
+    display: none;
+  }
+  .bar {
+    grid-template-columns: auto 1fr;
+  }
+  .clipLabel {
+    font-size: 10px;
+  }
+  /* Tor ekranda faqat faol klipning nomi ko'rinadi */
+  .clip:not(.active) .clipLabel {
+    opacity: 0;
+  }
+  .clip {
+    padding: 0 6px;
+  }
+}
