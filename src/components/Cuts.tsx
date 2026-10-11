@@ -82,7 +82,8 @@ function Tile({ cut, onOpen }: { cut: Cut; onOpen: (c: Cut) => void }) {
   );
 }
 
-export function Cuts() {
+/** Montaj oynasi tarkibi: video kartalar va lightbox */
+export function CutsGrid() {
   const { lang, t } = useLang();
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<Cut | null>(null);
@@ -97,22 +98,12 @@ export function Cuts() {
   };
 
   return (
-    <section id="cuts" className="section" style={{ "--accent": "var(--amber)" } as React.CSSProperties}>
-      <div className="wrap">
-        <div className="section-head">
-          <div>
-            <span className="track-label mono">V1 · {t("cuts")}</span>
-            <h2 className="section-title">{t("cuts")}</h2>
-          </div>
-          <p className="section-lede">{t("cutsLede")}</p>
-        </div>
-
-        <ul className={styles.grid}>
-          {cuts.map((c) => (
-            <Tile key={c.id} cut={c} onOpen={show} />
-          ))}
-        </ul>
-      </div>
+    <div>
+      <ul className={styles.grid}>
+        {cuts.map((c) => (
+          <Tile key={c.id} cut={c} onOpen={show} />
+        ))}
+      </ul>
 
       <dialog ref={dialog} className={styles.dialog} onClose={() => setOpen(null)}>
         {open && (
@@ -133,6 +124,6 @@ export function Cuts() {
           </div>
         )}
       </dialog>
-    </section>
+    </div>
   );
 }

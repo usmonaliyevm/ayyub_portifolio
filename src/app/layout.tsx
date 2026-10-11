@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LangProvider } from "@/components/LangProvider";
+import { ModeProvider } from "@/components/ModeProvider";
 import { site } from "@/content/site";
 
 const bricolage = Bricolage_Grotesque({
@@ -35,7 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${bricolage.variable} ${plex.variable} ${jet.variable}`}>
       <body>
-        <LangProvider>{children}</LangProvider>
+        <LangProvider>
+          <ModeProvider>{children}</ModeProvider>
+        </LangProvider>
       </body>
     </html>
   );

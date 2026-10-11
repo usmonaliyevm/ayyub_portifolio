@@ -38,9 +38,19 @@ export const ui: Record<Lang, Record<string, string>> = {
       "O'zbekistonlik Flutter dasturchi va montajchi. Ikki hunar, bitta odat: har bir kadrni o'z joyiga qo'yish.",
     scroll: "Pastga",
     work: "Kod",
-    workLede: "Mobil ilovalar. Flutter, toza arxitektura, tezkor interfeys.",
+    workLede: "Mobil ilovalar va pub.dev paketlari. Flutter, toza arxitektura, tezkor interfeys.",
     cuts: "Montaj",
     cutsLede: "Reels, reklama, YouTube. Ritm, rang, ovoz.",
+    choose: "Ikki oyna",
+    chooseLede: "Qaysi birini ko'rmoqchisiz? Oynani bosing.",
+    openWindow: "Ochish",
+    closeWindow: "Yopish",
+    montajTeaser: "ta video",
+    codingTeaser: "ta loyiha va paket",
+    projects: "Loyihalar",
+    packages: "pub.dev paketlari",
+    pubScore: "pub ball",
+    viewPackage: "pub.dev'da ko'rish",
     about: "Men haqimda",
     aboutBody:
       "Kunduzi Flutter'da ilova yozaman, kechqurun Premiere va DaVinci'da video kesaman. Ikkalasida ham bitta narsa muhim: foydalanuvchi sezmaydigan, lekin his qiladigan tartib. Hozir freelance loyihalar va o'z ilovalarim ustida ishlayman.",
@@ -65,10 +75,20 @@ export const ui: Record<Lang, Record<string, string>> = {
     lede:
       "Flutter developer and video editor from Uzbekistan. Two crafts, one habit: putting every frame where it belongs.",
     scroll: "Scroll",
-    work: "Code",
-    workLede: "Mobile apps. Flutter, clean architecture, fast UI.",
-    cuts: "Cuts",
+    work: "Coding",
+    workLede: "Mobile apps and pub.dev packages. Flutter, clean architecture, fast UI.",
+    cuts: "Editing",
     cutsLede: "Reels, ads, YouTube. Rhythm, color, sound.",
+    choose: "Two windows",
+    chooseLede: "Which one do you want to see? Click a window.",
+    openWindow: "Open",
+    closeWindow: "Close",
+    montajTeaser: "videos",
+    codingTeaser: "projects and packages",
+    projects: "Projects",
+    packages: "pub.dev packages",
+    pubScore: "pub points",
+    viewPackage: "View on pub.dev",
     about: "About",
     aboutBody:
       "By day I write Flutter apps, by night I cut video in Premiere and DaVinci. Both come down to the same thing: order the user never notices but always feels. Currently working on freelance projects and my own apps.",
@@ -108,6 +128,40 @@ export const projects: Project[] = [
     summary: {
       uz: "Shu g'oyaning birinchi, yengil versiyasi. Keyinchalik PinPic shundan o'sib chiqdi.",
       en: "First, lightweight take on the same idea. PinPic grew out of it.",
+    },
+  },
+];
+
+export type Package = {
+  name: string;
+  version: string;
+  score: string;
+  url: string;
+  repo: string;
+  summary: Record<Lang, string>;
+};
+
+export const packages: Package[] = [
+  {
+    name: "mu_search_table_dropdown",
+    version: "0.0.3",
+    score: "150/160",
+    url: "https://pub.dev/packages/mu_search_table_dropdown",
+    repo: "https://github.com/usmonaliyevm/mu_search_table_dropdown",
+    summary: {
+      uz: "Jadval ichida ishlaydigan qidiruvli dropdown. BLoC bilan boshqariladi, katta ro'yxatlarda tez filtrlaydi.",
+      en: "Searchable dropdown for tables, driven by BLoC. Filters large datasets fast.",
+    },
+  },
+  {
+    name: "mu_radio_group",
+    version: "0.0.3",
+    score: "115/160",
+    url: "https://pub.dev/packages/mu_radio_group",
+    repo: "https://github.com/usmonaliyevm/mu_rediogroup",
+    summary: {
+      uz: "Sodda va moslashuvchan radio tugmalar guruhi. Bitta widget, istalgan dizayn.",
+      en: "Simple, flexible radio button group. One widget, any design.",
     },
   },
 ];

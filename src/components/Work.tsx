@@ -1,54 +1,73 @@
 "use client";
 
 import { useLang } from "./LangProvider";
-import { projects, site } from "@/content/site";
+import { packages, projects, site } from "@/content/site";
 import styles from "./Work.module.css";
 
-export function Work() {
+/** Coding oynasi tarkibi: loyihalar va pub.dev paketlari */
+export function WorkList() {
   const { lang, t } = useLang();
   return (
-    <section id="work" className="section" style={{ "--accent": "var(--blue)" } as React.CSSProperties}>
-      <div className="wrap">
-        <div className="section-head">
-          <div>
-            <span className="track-label mono">C1 · {t("work")}</span>
-            <h2 className="section-title">{t("work")}</h2>
-          </div>
-          <p className="section-lede">{t("workLede")}</p>
-        </div>
+    <div>
+      <span className="track-label mono">{t("projects")}</span>
+      <ul className={styles.list}>
+        {projects.map((p) => (
+          <li key={p.id} className={styles.item}>
+            <div className={styles.meta}>
+              <span className="mono">{p.year}</span>
+            </div>
+            <div className={styles.main}>
+              <h3 className={styles.name}>{p.name}</h3>
+              <p className={styles.summary}>{p.summary[lang]}</p>
+              <ul className={styles.stack} aria-label="Stack">
+                {p.stack.map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+            </div>
+            <div className={styles.action}>
+              {p.url ? (
+                <a href={p.url} target="_blank" rel="noreferrer" className={styles.link}>
+                  {t("viewCode")} ↗
+                </a>
+              ) : (
+                <span className={`mono ${styles.private}`}>{t("privateRepo")}</span>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
 
-        <ul className={styles.list}>
-          {projects.map((p) => (
-            <li key={p.id} className={styles.item}>
-              <div className={styles.meta}>
-                <span className="mono">{p.year}</span>
-              </div>
-              <div className={styles.main}>
-                <h3 className={styles.name}>{p.name}</h3>
-                <p className={styles.summary}>{p.summary[lang]}</p>
-                <ul className={styles.stack} aria-label="Stack">
-                  {p.stack.map((s) => (
-                    <li key={s}>{s}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className={styles.action}>
-                {p.url ? (
-                  <a href={p.url} target="_blank" rel="noreferrer" className={styles.link}>
-                    {t("viewCode")} ↗
-                  </a>
-                ) : (
-                  <span className={`mono ${styles.private}`}>{t("privateRepo")}</span>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
+      <span className={`track-label mono ${styles.packagesLabel}`}>{t("packages")}</span>
+      <ul className={styles.list}>
+        {packages.map((p) => (
+          <li key={p.name} className={styles.item}>
+            <div className={styles.meta}>
+              <span className="mono">v{p.version}</span>
+            </div>
+            <div className={styles.main}>
+              <h3 className={`${styles.name} ${styles.pkgName}`}>{p.name}</h3>
+              <p className={styles.summary}>{p.summary[lang]}</p>
+              <ul className={styles.stack} aria-label="Meta">
+                <li>{p.score} {t("pubScore")}</li>
+                <li>Flutter</li>
+              </ul>
+            </div>
+            <div className={`${styles.action} ${styles.actionCol}`}>
+              <a href={p.url} target="_blank" rel="noreferrer" className={styles.link}>
+                {t("viewPackage")} ↗
+              </a>
+              <a href={p.repo} target="_blank" rel="noreferrer" className={`mono ${styles.repo}`}>
+                GitHub ↗
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
 
-        <a href={site.github} target="_blank" rel="noreferrer" className={`mono ${styles.more}`}>
-          github.com/{site.handle} ↗
-        </a>
-      </div>
-    </section>
+      <a href={site.github} target="_blank" rel="noreferrer" className={`mono ${styles.more}`}>
+        github.com/{site.handle} ↗
+      </a>
+    </div>
   );
 }

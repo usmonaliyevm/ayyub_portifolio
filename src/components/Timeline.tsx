@@ -5,7 +5,17 @@ import { useLang } from "./LangProvider";
 import { toTimecode } from "./timecode";
 import styles from "./Timeline.module.css";
 
-export type Clip = { id: string; label: string; track: "v" | "c" };
+export type Clip = {
+  id: string;
+  label: string;
+  track: "v" | "c";
+  /** O'lchanadigan element; berilmasa id ishlatiladi */
+  el?: string;
+  /** Element balandligining qaysi qismi (0..1) shu klipga tegishli */
+  from?: number;
+  to?: number;
+  onClick?: () => void;
+};
 
 /** Butun sahifa "davomiyligi" soniyalarda. Faqat timecode ko'rinishi uchun. */
 const TOTAL = 150;
@@ -24,10 +34,11 @@ export function Timeline({ clips }: { clips: Clip[] }) {
       const docH = document.documentElement.scrollHeight;
       const next = clips
         .map((c) => {
-          const el = document.getElementById(c.id);
+          const el = document.getElementById(c.el ?? c.id);
           if (!el) return null;
-          const top = el.offsetTop;
-          return { ...c, start: top / docH, end: (top + el.offsetHeight) / docH };
+          const top = el.offsetTop + el.offsetHeight * (c.from ?? 0);
+          const bottom = el.offsetTop + el.offsetHeight * (c.to ?? 1);
+          return { ...c, start: top / docH, end: bottom / docH };
         })
         .filter(Boolean) as Seg[];
       setSegs(next);
@@ -79,7 +90,12 @@ export function Timeline({ clips }: { clips: Clip[] }) {
           return (
             <a
               key={s.id}
-              href={`#${s.id}`}
+              href={`#${s.el ?? s.id}`}
+              onClick={(e) => {
+                if (!s.onClick) return;
+                e.preventDefault();
+                s.onClick();
+              }}
               className={`${styles.clip} ${s.track === "c" ? styles.clipCode : styles.clipVideo} ${isActive ? styles.active : ""}`}
               style={{ left: `${left}%`, width: `calc(${width}% - 3px)` }}
               aria-current={isActive ? "location" : undefined}

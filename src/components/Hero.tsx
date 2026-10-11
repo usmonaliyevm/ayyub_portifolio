@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useLang } from "./LangProvider";
+import { useMode } from "./ModeProvider";
 import { site } from "@/content/site";
 import { toTimecode } from "./timecode";
 import styles from "./Hero.module.css";
 
 export function Hero() {
   const { lang, setLang, t } = useLang();
+  const { open } = useMode();
   const [elapsed, setElapsed] = useState(0);
 
   // Sahifa ochilganidan beri o'tgan vaqt, montaj dasturidagi kabi
@@ -60,15 +62,16 @@ export function Hero() {
           <span className={styles.rulerTicks} />
         </div>
 
+        {/* Rollar ham oynalarni ochadi */}
         <div className={styles.roles}>
-          <span className={styles.roleCode}>
+          <button type="button" className={styles.roleCode} onClick={() => open("coding")}>
             <i />
             {t("role1")}
-          </span>
-          <span className={styles.roleCut}>
+          </button>
+          <button type="button" className={styles.roleCut} onClick={() => open("montaj")}>
             <i />
             {t("role2")}
-          </span>
+          </button>
         </div>
 
         <p className={styles.tagline}>{t("tagline")}</p>

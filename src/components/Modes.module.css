@@ -1,0 +1,150 @@
+.section {
+  scroll-margin-top: 0;
+}
+
+.windows {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 760px) {
+  .windows {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Oyna: montaj dasturidagi panel kabi, sarlavha chizig'i va uch nuqta */
+.window {
+  appearance: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  font: inherit;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.window:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.open {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-deep);
+}
+
+.dots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.open .dots i:first-child {
+  background: var(--accent);
+}
+
+.windowBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: clamp(20px, 3vw, 32px) clamp(16px, 2.4vw, 28px);
+  flex: 1;
+}
+
+.windowTitle {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  font-variation-settings: "wdth" 85, "opsz" 64;
+}
+
+.windowLede {
+  color: var(--muted);
+  max-width: 36ch;
+}
+
+.windowFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px clamp(16px, 2.4vw, 28px);
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--fill) 35%, var(--surface));
+}
+
+.cta {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* Ochilgan oyna tarkibi */
+.panel {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 2px solid var(--accent);
+  animation: reveal 260ms ease-out;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tools {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.tools ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tools li {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 500;
+  font-variation-settings: "wdth" 90, "opsz" 24;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}

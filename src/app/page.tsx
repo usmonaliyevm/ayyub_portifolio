@@ -1,6 +1,5 @@
 import { Hero } from "@/components/Hero";
-import { Work } from "@/components/Work";
-import { Cuts } from "@/components/Cuts";
+import { Modes } from "@/components/Modes";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { TimelineHost } from "@/components/TimelineHost";
@@ -9,8 +8,7 @@ export default function Page() {
   return (
     <main>
       <Hero />
-      <Work />
-      <Cuts />
+      <Modes />
       <About />
       <Contact />
       <TimelineHost />

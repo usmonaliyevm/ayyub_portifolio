@@ -99,3 +99,35 @@
 .more:hover {
   color: var(--text);
 }
+
+.packagesLabel {
+  margin-top: 40px;
+}
+
+.pkgName {
+  font-family: var(--font-mono);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 500;
+  letter-spacing: 0;
+  font-variation-settings: normal;
+}
+
+.actionCol {
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+@media (min-width: 760px) {
+  .actionCol {
+    align-items: flex-end;
+  }
+}
+
+.repo {
+  text-decoration: none;
+}
+
+.repo:hover {
+  color: var(--text);
+}
