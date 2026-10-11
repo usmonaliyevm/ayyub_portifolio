@@ -51,7 +51,7 @@ export function Hero() {
 
       <div className={`wrap ${styles.body}`}>
         <h1 className={styles.name}>
-          <span className={styles.first}>Ayyub</span>
+          <span className={styles.first}>Muhammadayyub</span>
           <span className={styles.last}>Usmonaliyev</span>
         </h1>
 

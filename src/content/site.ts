@@ -21,7 +21,7 @@ export type Cut = {
 };
 
 export const site = {
-  name: "Ayyub Usmonaliyev",
+  name: "Muhammadayyub Usmonaliyev",
   handle: "usmonaliyevm",
   github: "https://github.com/usmonaliyevm",
   // Shu ikkitasini o'zingizniki bilan almashtiring

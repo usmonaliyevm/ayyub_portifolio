@@ -64,8 +64,9 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--amber);
-  color: var(--amber-ink);
+  background: var(--red);
+  color: var(--text);
+  border: 1px solid var(--red-bright);
   font-size: 12px;
   transition: transform 160ms ease;
 }

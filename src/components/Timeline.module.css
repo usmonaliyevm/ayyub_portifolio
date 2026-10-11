@@ -69,13 +69,13 @@
 }
 
 .clipVideo {
-  background: color-mix(in srgb, var(--amber) 28%, var(--surface));
-  border-color: color-mix(in srgb, var(--amber) 40%, transparent);
+  background: var(--red);
+  border-color: color-mix(in srgb, var(--red-bright) 60%, transparent);
 }
 
 .clipCode {
-  background: color-mix(in srgb, var(--blue) 24%, var(--surface));
-  border-color: color-mix(in srgb, var(--blue) 40%, transparent);
+  background: color-mix(in srgb, var(--sage) 55%, var(--surface));
+  border-color: color-mix(in srgb, var(--sage-bright) 60%, transparent);
 }
 
 .clip:hover {
@@ -104,7 +104,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: var(--amber);
+  background: var(--text);
   transform: translateX(-1px);
   pointer-events: none;
 }
@@ -115,7 +115,7 @@
   left: -5px;
   width: 12px;
   height: 8px;
-  background: var(--amber);
+  background: var(--text);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 

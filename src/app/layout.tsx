@@ -23,7 +23,7 @@ const jet = JetBrains_Mono({
 export const metadata: Metadata = {
   title: `${site.name} — Flutter developer & video editor`,
   description:
-    "Portfolio of Ayyub Usmonaliyev: Flutter mobile apps and video editing. Reels, ads, YouTube.",
+    "Portfolio of Muhammadayyub Usmonaliyev: Flutter mobile apps and video editing. Reels, ads, YouTube.",
   openGraph: {
     title: `${site.name} — Flutter developer & video editor`,
     description: "Flutter apps and video cuts.",

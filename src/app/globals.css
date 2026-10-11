@@ -1,16 +1,21 @@
 :root {
-  /* Montaj dasturi paneli: kulrang, iliq oq matn, playhead amber, kod ko'k */
-  --bg: #26272d;
-  --bg-deep: #1e1f24;
-  --surface: #30313a;
-  --line: #43454f;
-  --line-soft: #363840;
-  --text: #edebe6;
-  --muted: #9a9aa6;
-  --amber: #f5a524;
-  --amber-ink: #2a1c05;
-  --blue: #7fb4ff;
-  --blue-ink: #0b1a33;
+  /* Brend ranglari: to'q qizil fon, qizil urg'u (montaj), kulrang-yashil (kod), krem matn */
+  --bg: #2d0000;
+  --bg-deep: #1f0000;
+  --surface: #3d0b0b;
+  --line: #5a1c1c;
+  --line-soft: #471212;
+  --text: #eeead7;
+  --muted: #757d6f;
+  --red: #6d0808;
+  --red-bright: #a51616; /* playhead va kichik belgilar uchun, fonda ko'rinishi uchun */
+  --sage: #757d6f;
+  --sage-bright: #9aa394;
+  /* Eski nomlar, komponentlar shularga tayanadi */
+  --amber: var(--red-bright);
+  --amber-ink: var(--text);
+  --blue: var(--sage-bright);
+  --blue-ink: var(--bg-deep);
 
   --font-display: var(--font-bricolage), "Arial Narrow", sans-serif;
   --font-body: var(--font-plex), system-ui, sans-serif;

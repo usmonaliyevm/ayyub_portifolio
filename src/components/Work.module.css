@@ -53,9 +53,9 @@
   font-size: 11px;
   letter-spacing: 0.06em;
   padding: 4px 8px;
-  border: 1px solid color-mix(in srgb, var(--blue) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--sage-bright) 55%, transparent);
   border-radius: 3px;
-  color: var(--blue);
+  color: var(--sage-bright);
 }
 
 .action {

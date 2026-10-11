@@ -18,9 +18,9 @@
 }
 
 .primary {
-  background: var(--amber);
-  color: var(--amber-ink);
-  border-color: var(--amber);
+  background: var(--red);
+  color: var(--text);
+  border-color: var(--red-bright);
 }
 
 .primary:hover,

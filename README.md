@@ -1,6 +1,6 @@
 # ayyub_portifolio
 
-Ayyub Usmonaliyev portfolio sayti: Flutter dasturchi va video montajchi. Next.js, TypeScript, uz/en.
+Muhammadayyub Usmonaliyev portfolio sayti: Flutter dasturchi va video montajchi. Next.js, TypeScript, uz/en.
 
 ## Ishga tushirish
 
