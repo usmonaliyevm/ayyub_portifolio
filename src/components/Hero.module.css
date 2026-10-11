@@ -11,6 +11,7 @@
   align-items: center;
   gap: 24px;
   padding: 20px 0;
+  animation: fadeDown 600ms 200ms both cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .handle {
@@ -18,7 +19,22 @@
 }
 
 .elapsed {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-variant-numeric: tabular-nums;
+}
+
+.recDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red-bright);
+  animation: blink 1.2s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.25; }
 }
 
 .lang {
@@ -55,9 +71,12 @@
   flex-direction: column;
   justify-content: center;
   padding-top: clamp(24px, 6vw, 72px);
+  --wipe: 50%;
 }
 
+/* ----- Ism: ikki qatlam + wipe ----- */
 .name {
+  position: relative;
   margin: 0;
   font-family: var(--font-display);
   font-weight: 700;
@@ -65,11 +84,36 @@
   line-height: 0.86;
   letter-spacing: -0.03em;
   font-variation-settings: "wdth" 70, "opsz" 96;
+  width: fit-content;
+  max-width: 100%;
+  /* kirishda chapdan o'ngga ochiladi; chekkalar bo'sh qoldirilgan, chunki
+     wipe chizig'i va C1/V1 belgilari blokdan tashqariga chiqadi */
+  clip-path: inset(-12% 100% -30% -2%);
+  animation: wipeIn 1100ms 350ms both cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+@keyframes wipeIn {
+  to { clip-path: inset(-12% -2% -30% -2%); }
+}
+
+.layerBase,
+.layerCode {
   display: flex;
   flex-direction: column;
 }
 
-/* 13 harfli ism: tor shrift, 390px ekranga sig'adi */
+.layerCode {
+  position: absolute;
+  inset: 0;
+  color: var(--sage-bright);
+  clip-path: inset(0 calc(100% - var(--wipe)) 0 0);
+  transition: clip-path 120ms linear;
+}
+
+.layerCode .last {
+  color: var(--sage);
+}
+
 .first {
   font-size: clamp(44px, 11.5vw, 152px);
   font-variation-settings: "wdth" 70, "opsz" 96;
@@ -81,14 +125,74 @@
   font-variation-settings: "wdth" 85, "opsz" 96;
 }
 
+/* Wipe chizig'i: faqat kursor hero ustida bo'lganda ko'rinadi */
+.wipeLine {
+  position: absolute;
+  top: -4%;
+  bottom: -4%;
+  left: var(--wipe);
+  width: 2px;
+  background: var(--text);
+  opacity: 0;
+  transition: opacity 250ms ease, left 120ms linear;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.wipeLine b {
+  position: absolute;
+  bottom: -18px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  padding: 2px 5px;
+  background: var(--text);
+  color: var(--bg-deep);
+}
+
+.wipeLine b:first-child {
+  right: 4px;
+}
+
+.wipeLine b:last-child {
+  left: 4px;
+}
+
+.live .wipeLine {
+  opacity: 1;
+}
+
+/* Sensorli qurilmada wipe o'zi sekin yuradi */
+@media (hover: none) {
+  .body {
+    animation: autoWipe 9s ease-in-out infinite alternate;
+  }
+  .wipeLine {
+    opacity: 0.6;
+  }
+}
+
+@keyframes autoWipe {
+  from { --wipe: 8%; }
+  to { --wipe: 92%; }
+}
+
+/* ----- Chizg'ich ----- */
 .ruler {
   position: relative;
   height: 18px;
   margin: clamp(20px, 3vw, 36px) 0 14px;
   border-bottom: 1px solid var(--line);
+  transform-origin: left;
+  animation: drawX 900ms 900ms both cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-/* Chizg'ich: har 1/24 da kichik, har 1/4 da katta tick */
+@keyframes drawX {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
 .rulerTicks {
   position: absolute;
   inset: 0;
@@ -98,7 +202,29 @@
   background-size: 100% 8px, 100% 18px;
   background-position: bottom, bottom;
   background-repeat: no-repeat;
-  mask-image: linear-gradient(to right, var(--blue) 50%, var(--amber) 50%);
+}
+
+/* ----- Rollar, matnlar: ketma-ket chiqadi ----- */
+.roles,
+.tagline,
+.lede,
+.scroll {
+  animation: fadeUp 700ms both cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.roles { animation-delay: 1250ms; }
+.tagline { animation-delay: 1400ms; }
+.lede { animation-delay: 1500ms; }
+.scroll { animation-delay: 1700ms; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
 }
 
 .roles {
@@ -122,11 +248,25 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  border-bottom: 1px solid transparent;
+  position: relative;
 }
 
-.roles button:hover {
-  border-bottom-color: currentColor;
+.roles button::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.roles button:hover::after,
+.roles button:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .roles i {
@@ -136,11 +276,11 @@
 }
 
 .roleCode i {
-  background: var(--blue);
+  background: var(--sage-bright);
 }
 
 .roleCut i {
-  background: var(--amber);
+  background: var(--red-bright);
 }
 
 .tagline {

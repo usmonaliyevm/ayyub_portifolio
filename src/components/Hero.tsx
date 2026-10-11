@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLang } from "./LangProvider";
 import { useMode } from "./ModeProvider";
 import { site } from "@/content/site";
@@ -11,8 +11,10 @@ export function Hero() {
   const { lang, setLang, t } = useLang();
   const { open } = useMode();
   const [elapsed, setElapsed] = useState(0);
+  const [hovering, setHovering] = useState(false);
+  const stage = useRef<HTMLDivElement>(null);
 
-  // Sahifa ochilganidan beri o'tgan vaqt, montaj dasturidagi kabi
+  // REC hisoblagich: sahifa ochilganidan beri
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
@@ -26,49 +28,66 @@ export function Hero() {
     return () => cancelAnimationFrame(id);
   }, []);
 
+  // A/B wipe: kursor x o'rni ismni ikki rangga bo'ladi (chap: kod, o'ng: montaj)
+  const onMove = (e: React.PointerEvent) => {
+    const el = stage.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    el.style.setProperty("--wipe", `${(x * 100).toFixed(2)}%`);
+  };
+
   return (
     <header id="intro" className={styles.hero}>
       <div className={`wrap ${styles.top}`}>
         <span className={`mono ${styles.handle}`}>{site.handle}</span>
-        <span className={`mono ${styles.elapsed}`}>REC {toTimecode(elapsed)}</span>
+        <span className={`mono ${styles.elapsed}`}>
+          <i className={styles.recDot} />
+          REC {toTimecode(elapsed)}
+        </span>
         <div className={styles.lang} role="group" aria-label="Language">
-          <button
-            type="button"
-            onClick={() => setLang("uz")}
-            className={lang === "uz" ? styles.langOn : ""}
-            aria-pressed={lang === "uz"}
-          >
+          <button type="button" onClick={() => setLang("uz")} className={lang === "uz" ? styles.langOn : ""} aria-pressed={lang === "uz"}>
             UZ
           </button>
-          <button
-            type="button"
-            onClick={() => setLang("en")}
-            className={lang === "en" ? styles.langOn : ""}
-            aria-pressed={lang === "en"}
-          >
+          <button type="button" onClick={() => setLang("en")} className={lang === "en" ? styles.langOn : ""} aria-pressed={lang === "en"}>
             EN
           </button>
         </div>
       </div>
 
-      <div className={`wrap ${styles.body}`}>
+      <div
+        ref={stage}
+        className={`wrap ${styles.body} ${hovering ? styles.live : ""}`}
+        onPointerMove={onMove}
+        onPointerEnter={() => setHovering(true)}
+        onPointerLeave={() => setHovering(false)}
+      >
+        {/* Ism ikki qatlamda: pastki krem, ustki (chap tomon) kulrang-yashil, wipe bilan kesiladi */}
         <h1 className={styles.name}>
-          <span className={styles.first}>Muhammadayyub</span>
-          <span className={styles.last}>Usmonaliyev</span>
+          <span className={styles.layerBase} aria-hidden="false">
+            <span className={styles.first}>Muhammadayyub</span>
+            <span className={styles.last}>Usmonaliyev</span>
+          </span>
+          <span className={styles.layerCode} aria-hidden="true">
+            <span className={styles.first}>Muhammadayyub</span>
+            <span className={styles.last}>Usmonaliyev</span>
+          </span>
+          <span className={styles.wipeLine} aria-hidden="true">
+            <b>C1</b>
+            <b>V1</b>
+          </span>
         </h1>
 
-        {/* Ikki hunar bitta chizg'ichda: chapda kod (ko'k), o'ngda montaj (amber) */}
         <div className={styles.ruler} aria-hidden="true">
           <span className={styles.rulerTicks} />
         </div>
 
-        {/* Rollar ham oynalarni ochadi */}
         <div className={styles.roles}>
-          <button type="button" className={styles.roleCode} onClick={() => open("coding")}>
+          <button type="button" className={styles.roleCode} onClick={() => open("coding")} data-cursor="C1">
             <i />
             {t("role1")}
           </button>
-          <button type="button" className={styles.roleCut} onClick={() => open("montaj")}>
+          <button type="button" className={styles.roleCut} onClick={() => open("montaj")} data-cursor="V1">
             <i />
             {t("role2")}
           </button>

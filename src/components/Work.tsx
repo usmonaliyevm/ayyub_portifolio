@@ -11,8 +11,8 @@ export function WorkList() {
     <div>
       <span className="track-label mono">{t("projects")}</span>
       <ul className={styles.list}>
-        {projects.map((p) => (
-          <li key={p.id} className={styles.item}>
+        {projects.map((p, i) => (
+          <li key={p.id} className={styles.item} data-reveal style={{ "--i": i } as React.CSSProperties}>
             <div className={styles.meta}>
               <span className="mono">{p.year}</span>
             </div>
@@ -27,7 +27,7 @@ export function WorkList() {
             </div>
             <div className={styles.action}>
               {p.url ? (
-                <a href={p.url} target="_blank" rel="noreferrer" className={styles.link}>
+                <a href={p.url} target="_blank" rel="noreferrer" className={styles.link} data-cursor="GITHUB">
                   {t("viewCode")} ↗
                 </a>
               ) : (
@@ -40,8 +40,8 @@ export function WorkList() {
 
       <span className={`track-label mono ${styles.packagesLabel}`}>{t("packages")}</span>
       <ul className={styles.list}>
-        {packages.map((p) => (
-          <li key={p.name} className={styles.item}>
+        {packages.map((p, i) => (
+          <li key={p.name} className={styles.item} data-reveal style={{ "--i": i } as React.CSSProperties}>
             <div className={styles.meta}>
               <span className="mono">v{p.version}</span>
             </div>

@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
+  perspective: 1200px;
 }
 
 @media (min-width: 760px) {
@@ -29,12 +30,48 @@
   overflow: hidden;
   cursor: pointer;
   font: inherit;
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  position: relative;
+  --rx: 0deg;
+  --ry: 0deg;
+  --gx: 50%;
+  --gy: 50%;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 160ms ease-out, border-color 180ms ease, box-shadow 180ms ease, opacity 300ms ease, filter 300ms ease;
 }
 
 .window:hover {
-  transform: translateY(-3px);
   border-color: var(--accent);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* Yaltiroq nuqta kursorga ergashadi */
+.glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--gx) var(--gy),
+    color-mix(in srgb, var(--text) 12%, transparent),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 250ms ease;
+  z-index: 1;
+}
+
+.window:hover .glare {
+  opacity: 1;
+}
+
+.dimmed {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+
+.dimmed:hover {
+  opacity: 1;
+  filter: none;
 }
 
 .open {
@@ -106,20 +143,41 @@
 }
 
 /* Ochilgan oyna tarkibi */
+/* Ochilgan oyna tarkibi: klip cho'zilgandek, avval chiziq, keyin tarkib */
 .panel {
   margin-top: 28px;
   padding-top: 28px;
   border-top: 2px solid var(--accent);
-  animation: reveal 260ms ease-out;
+  animation: panelIn 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  position: relative;
 }
 
-@keyframes reveal {
+.panel::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--text);
+  transform-origin: left;
+  animation: drawLine 600ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+@keyframes drawLine {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes panelIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
+    clip-path: inset(0 0 0 0);
     transform: none;
   }
 }

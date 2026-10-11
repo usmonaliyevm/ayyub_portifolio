@@ -7,6 +7,23 @@ import { WorkList } from "./Work";
 import { CutsGrid } from "./Cuts";
 import styles from "./Modes.module.css";
 
+/** 3D egilish: kursor o'rniga qarab --rx/--ry/--gx/--gy o'rnatiladi */
+function tilt(e: React.PointerEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  const px = (e.clientX - r.left) / r.width;
+  const py = (e.clientY - r.top) / r.height;
+  el.style.setProperty("--rx", `${((0.5 - py) * 6).toFixed(2)}deg`);
+  el.style.setProperty("--ry", `${((px - 0.5) * 8).toFixed(2)}deg`);
+  el.style.setProperty("--gx", `${(px * 100).toFixed(1)}%`);
+  el.style.setProperty("--gy", `${(py * 100).toFixed(1)}%`);
+}
+function untilt(e: React.PointerEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  el.style.setProperty("--rx", "0deg");
+  el.style.setProperty("--ry", "0deg");
+}
+
 /** Ikki oyna: Montaj (V1) va Coding (C1). Bosilgani ochiladi. */
 export function Modes() {
   const { t } = useLang();
@@ -37,29 +54,37 @@ export function Modes() {
     <section id="work" className={`section ${styles.section}`}>
       <div className="wrap">
         <div className="section-head">
-          <div>
+          <div data-reveal>
             <span className="track-label mono" style={{ "--accent": "var(--text)" } as React.CSSProperties}>
               V1 + C1 · {t("choose")}
             </span>
             <h2 className="section-title">{t("choose")}</h2>
           </div>
-          <p className="section-lede">{t("chooseLede")}</p>
+          <p className="section-lede" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+            {t("chooseLede")}
+          </p>
         </div>
 
         <div className={styles.windows} data-mode={mode ?? "none"}>
-          {windows.map((w) => {
+          {windows.map((w, i) => {
             const isOpen = mode === w.id;
+            const dimmed = mode !== null && !isOpen;
             return (
               <button
                 key={w.id}
                 type="button"
                 id={`win-${w.id}`}
-                className={`${styles.window} ${isOpen ? styles.open : ""}`}
-                style={{ "--accent": w.accent, "--fill": w.fill } as React.CSSProperties}
+                className={`${styles.window} ${isOpen ? styles.open : ""} ${dimmed ? styles.dimmed : ""}`}
+                style={{ "--accent": w.accent, "--fill": w.fill, "--i": i + 2 } as React.CSSProperties}
                 onClick={() => (isOpen ? setMode(null) : open(w.id))}
+                onPointerMove={tilt}
+                onPointerLeave={untilt}
                 aria-expanded={isOpen}
                 aria-controls={`panel-${w.id}`}
+                data-reveal
+                data-cursor={isOpen ? t("closeWindow").toUpperCase() : t("openWindow").toUpperCase()}
               >
+                <span className={styles.glare} aria-hidden="true" />
                 <span className={styles.titlebar}>
                   <span className={styles.dots} aria-hidden="true">
                     <i />

@@ -1,0 +1,50 @@
+.dot,
+.ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 100;
+  will-change: transform;
+}
+
+/* Playhead nuqta: krem, qattiq */
+.dot::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text);
+}
+
+/* Orqadan ergashuvchi halqa; matn bo'lsa kapsulaga aylanadi */
+.ring span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--text) 55%, transparent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--bg-deep);
+  white-space: nowrap;
+  transition: width 220ms cubic-bezier(0.2, 0.7, 0.2, 1), height 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 220ms ease, padding 220ms ease, border-color 220ms ease;
+}
+
+.ringLabel span {
+  width: auto;
+  height: 28px;
+  padding: 0 12px;
+  background: var(--text);
+  border-color: var(--text);
+}
