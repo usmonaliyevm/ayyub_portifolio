@@ -167,37 +167,56 @@ export const packages: Package[] = [
 ];
 
 export const cuts: Cut[] = [
+  // Asl fayllar video-src/ papkasida. Mos keladigan nomlar:
+  // cut-01 = 1.mp4, cut-02 = 2.mp4, cut-03 = Aleksey, cut-04 = Soyubxon aka,
+  // cut-05 = Zarina opa, cut-06 = charq.1. Sarlavha va asboblarni o'zingiz to'g'rilang.
   {
     id: "cut-01",
     file: "cut-01.mp4",
     aspect: "9/16",
-    title: { uz: "Reel 01", en: "Reel 01" },
-    kind: { uz: "Instagram reels", en: "Instagram reel" },
-    tools: ["Premiere Pro", "After Effects"],
+    title: { uz: "Target 01", en: "Target 01" },
+    kind: { uz: "Target reklama", en: "Targeted ad" },
+    tools: [],
   },
   {
     id: "cut-02",
     file: "cut-02.mp4",
-    aspect: "16/9",
-    title: { uz: "Reklama roligi", en: "Commercial" },
-    kind: { uz: "Reklama", en: "Ad spot" },
-    tools: ["DaVinci Resolve"],
+    aspect: "9/16",
+    title: { uz: "Target 02", en: "Target 02" },
+    kind: { uz: "Target reklama", en: "Targeted ad" },
+    tools: [],
   },
   {
     id: "cut-03",
     file: "cut-03.mp4",
     aspect: "9/16",
-    title: { uz: "Reel 02", en: "Reel 02" },
-    kind: { uz: "Instagram reels", en: "Instagram reel" },
-    tools: ["Premiere Pro"],
+    title: { uz: "Target 03", en: "Target 03" },
+    kind: { uz: "Target reklama", en: "Targeted ad" },
+    tools: [],
   },
   {
     id: "cut-04",
     file: "cut-04.mp4",
-    aspect: "16/9",
-    title: { uz: "YouTube montaj", en: "YouTube edit" },
-    kind: { uz: "YouTube", en: "YouTube" },
-    tools: ["Premiere Pro", "After Effects"],
+    aspect: "9/16",
+    title: { uz: "Target 04", en: "Target 04" },
+    kind: { uz: "Target reklama", en: "Targeted ad" },
+    tools: [],
+  },
+  {
+    id: "cut-05",
+    file: "cut-05.mp4",
+    aspect: "9/16",
+    title: { uz: "Target 05 (kreativ)", en: "Target 05 (creative)" },
+    kind: { uz: "Target reklama", en: "Targeted ad" },
+    tools: [],
+  },
+  {
+    id: "cut-06",
+    file: "cut-06.mp4",
+    aspect: "9/16",
+    title: { uz: "Target 06", en: "Target 06" },
+    kind: { uz: "Target reklama", en: "Targeted ad" },
+    tools: [],
   },
 ];
 

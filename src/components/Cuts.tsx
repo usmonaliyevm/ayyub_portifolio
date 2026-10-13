@@ -89,7 +89,7 @@ function Tile({ cut, index, onOpen }: { cut: Cut; index: number; onOpen: (c: Cut
       <div className={styles.caption}>
         <strong>{cut.title[lang]}</strong>
         <span className="mono">
-          {cut.kind[lang]} · {cut.tools.join(", ")}
+          {[cut.kind[lang], ...cut.tools].join(" · ")}
         </span>
       </div>
     </li>

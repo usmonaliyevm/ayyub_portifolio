@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# asl (siqilmagan) videolar, repo'ga kirmaydi
+/video-src/
