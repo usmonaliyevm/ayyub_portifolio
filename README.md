@@ -21,4 +21,5 @@ Hamma matn, loyihalar, videolar va aloqa ma'lumotlari bitta faylda: `src/content
 
 ## Deploy
 
-Vercel: repo'ni ulang, boshqa sozlash kerak emas.
+GitHub Pages: `main`ga push qilinsa, `.github/workflows/pages.yml` saytni o'zi chiqaradi.
+Manzil: https://usmonaliyevm.github.io/ayyubportifolioo/

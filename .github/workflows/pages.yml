@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_BASE_PATH: /ayyub_portifolio
+      NEXT_PUBLIC_BASE_PATH: /ayyubportifolioo
       NEXT_PUBLIC_SITE_URL: https://usmonaliyevm.github.io
     steps:
       - uses: actions/checkout@v4

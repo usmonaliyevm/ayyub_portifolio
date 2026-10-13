@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-/* GitHub Pages: sayt https://usmonaliyevm.github.io/ayyub_portifolio ostida turadi,
+/* GitHub Pages: sayt https://usmonaliyevm.github.io/ayyubportifolioo ostida turadi,
    shuning uchun basePath env orqali beriladi (lokalda bo'sh). */
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
