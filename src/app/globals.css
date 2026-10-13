@@ -23,13 +23,19 @@
   --blue: var(--sage-bright);
   --blue-ink: var(--bg-deep);
 
-  --font-display: var(--font-bricolage), var(--font-display-cyr), "Arial Narrow", sans-serif;
+  --font-display: var(--font-bricolage), "Arial Narrow", sans-serif;
   --font-body: var(--font-plex), system-ui, sans-serif;
   --font-mono: var(--font-jet), ui-monospace, monospace;
 
   --timeline-h: 64px;
   --gutter: clamp(16px, 4vw, 56px);
   --maxw: 1240px;
+}
+
+/* Ruscha: Bricolage'da kirill yo'q, next/font'ning Arial zaxirasi uni yutib yuboradi,
+   shuning uchun display shrift sifatida Oswald birinchi turadi (ism bundan mustasno) */
+html[lang="ru"] {
+  --font-display: var(--font-display-cyr), var(--font-bricolage), sans-serif;
 }
 
 * {
