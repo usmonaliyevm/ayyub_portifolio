@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLang } from "./LangProvider";
 import { useMode } from "./ModeProvider";
-import { site } from "@/content/site";
+import { langs, site } from "@/content/site";
 import { FPS, toTimecode } from "./timecode";
 import styles from "./Hero.module.css";
 
@@ -45,12 +45,11 @@ export function Hero() {
           REC <span ref={rec}>{toTimecode(0)}</span>
         </span>
         <div className={styles.lang} role="group" aria-label={t("language")}>
-          <button type="button" onClick={() => setLang("uz")} className={lang === "uz" ? styles.langOn : ""} aria-pressed={lang === "uz"}>
-            UZ
-          </button>
-          <button type="button" onClick={() => setLang("en")} className={lang === "en" ? styles.langOn : ""} aria-pressed={lang === "en"}>
-            EN
-          </button>
+          {langs.map((l) => (
+            <button key={l} type="button" onClick={() => setLang(l)} className={lang === l ? styles.langOn : ""} aria-pressed={lang === l}>
+              {l.toUpperCase()}
+            </button>
+          ))}
         </div>
       </div>
 

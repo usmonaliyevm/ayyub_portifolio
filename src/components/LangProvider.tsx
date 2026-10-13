@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useSyncExternalStore } from "react";
-import { ui, type Lang } from "@/content/site";
+import { langs, ui, type Lang } from "@/content/site";
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
 
@@ -17,13 +17,14 @@ const subscribe = (fn: () => void) => {
   listeners.add(fn);
   return () => listeners.delete(fn);
 };
-const isLang = (v: unknown): v is Lang => v === "uz" || v === "en";
+const isLang = (v: unknown): v is Lang => (langs as unknown[]).includes(v);
 
 function readLang(): Lang {
   try {
     const saved = localStorage.getItem("lang");
     if (isLang(saved)) return saved;
-    if (/^(uz|ru)/i.test(navigator.language)) return "uz";
+    if (/^uz/i.test(navigator.language)) return "uz";
+    if (/^ru/i.test(navigator.language)) return "ru";
   } catch {}
   return "en";
 }

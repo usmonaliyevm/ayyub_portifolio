@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import { Bricolage_Grotesque, IBM_Plex_Sans, JetBrains_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import { LangProvider } from "@/components/LangProvider";
 import { ModeProvider } from "@/components/ModeProvider";
@@ -12,12 +12,18 @@ const bricolage = Bricolage_Grotesque({
   axes: ["wdth", "opsz"],
 });
 const plex = IBM_Plex_Sans({
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   weight: ["400", "500"],
   variable: "--font-plex",
 });
+/* Bricolage'da kirill yo'q: ruscha sarlavhalar uchun tor Oswald zaxira shrift */
+const oswald = Oswald({
+  subsets: ["cyrillic"],
+  weight: ["500", "600", "700"],
+  variable: "--font-display-cyr",
+});
 const jet = JetBrains_Mono({
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   weight: ["400", "500"],
   variable: "--font-jet",
 });
@@ -52,7 +58,7 @@ const jsFlag = "document.documentElement.classList.add('js')";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${plex.variable} ${jet.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${bricolage.variable} ${plex.variable} ${oswald.variable} ${jet.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: jsFlag }} />
       </head>

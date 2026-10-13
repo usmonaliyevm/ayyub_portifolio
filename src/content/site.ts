@@ -1,4 +1,5 @@
-export type Lang = "uz" | "en";
+export type Lang = "uz" | "en" | "ru";
+export const langs: Lang[] = ["uz", "en", "ru"];
 
 /* public/ ichidagi fayllarga qo'lda yo'l yozganda shu prefiks kerak (GitHub Pages basePath) */
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -57,7 +58,8 @@ export const ui: Record<Lang, Record<string, string>> = {
     viewPackage: "pub.dev'da ko'rish",
     about: "Men haqimda",
     aboutBody:
-      "Kunduzi Flutter'da ilova yozaman, kechqurun Premiere va DaVinci'da video kesaman. Ikkalasida ham bitta narsa muhim: foydalanuvchi sezmaydigan, lekin his qiladigan tartib. Hozir freelance loyihalar va o'z ilovalarim ustida ishlayman.",
+      "2022-yildan beri mediadaman, ikki yildan ortiq vaqtdan buyon montaj bilan professional shug'ullanaman. Shu vaqt ichida 15 dan ortiq loyiha uchun video tayyorladim: target reklamalar, reels, brend roliklar va YouTube kontent. Kunduzi Flutter'da ilova yozaman, kechqurun Premiere va DaVinci'da video kesaman. Ikkalasida ham bitta narsa muhim: foydalanuvchi sezmaydigan, lekin his qiladigan tartib.",
+    clients: "Men bilan ishlagan kompaniyalar",
     tools: "Asboblar",
     contact: "Aloqa",
     contactLede: "Loyiha bormi? Yozing, bir kun ichida javob beraman.",
@@ -99,7 +101,8 @@ export const ui: Record<Lang, Record<string, string>> = {
     viewPackage: "View on pub.dev",
     about: "About",
     aboutBody:
-      "By day I write Flutter apps, by night I cut video in Premiere and DaVinci. Both come down to the same thing: order the user never notices but always feels. Currently working on freelance projects and my own apps.",
+      "I have worked in media since 2022 and have been editing professionally for over two years. In that time I have delivered video for more than 15 projects: targeted ads, reels, brand spots and YouTube content. By day I write Flutter apps, by night I cut video in Premiere and DaVinci. Both come down to the same thing: order the user never notices but always feels.",
+    clients: "Companies I have worked with",
     tools: "Tools",
     contact: "Contact",
     contactLede: "Have a project? Write me, I reply within a day.",
@@ -118,6 +121,49 @@ export const ui: Record<Lang, Record<string, string>> = {
     meta: "Meta",
     footer: "Built with Next.js. The timeline is the page map.",
   },
+  ru: {
+    role1: "Разработчик",
+    role2: "Монтажёр",
+    tagline: "Пишу приложения. Монтирую видео.",
+    lede:
+      "Flutter-разработчик и видеомонтажёр из Узбекистана. Два ремесла, одна привычка: ставить каждый кадр на своё место.",
+    scroll: "Вниз",
+    work: "Код",
+    workLede: "Мобильные приложения и пакеты pub.dev. Flutter, чистая архитектура, быстрый интерфейс.",
+    cuts: "Монтаж",
+    cutsLede: "Reels, реклама, YouTube. Ритм, цвет, звук.",
+    choose: "Два окна",
+    chooseLede: "Что хотите посмотреть? Нажмите на окно.",
+    openWindow: "Открыть",
+    closeWindow: "Закрыть",
+    montajTeaser: "видео",
+    codingTeaser: "проектов и пакетов",
+    projects: "Проекты",
+    packages: "Пакеты pub.dev",
+    pubScore: "pub-баллов",
+    viewPackage: "Открыть на pub.dev",
+    about: "Обо мне",
+    aboutBody:
+      "Работаю в медиа с 2022 года, профессионально занимаюсь монтажом больше двух лет. За это время сделал видео более чем для 15 проектов: таргетированная реклама, reels, брендовые ролики и контент для YouTube. Днём пишу приложения на Flutter, вечером монтирую в Premiere и DaVinci. В обоих случаях важно одно: порядок, который пользователь не замечает, но чувствует.",
+    clients: "Компании, с которыми я работал",
+    tools: "Инструменты",
+    contact: "Контакты",
+    contactLede: "Есть проект? Напишите, отвечу в течение дня.",
+    writeTelegram: "Написать в Telegram",
+    sendEmail: "Написать на почту",
+    viewCode: "Смотреть код",
+    privateRepo: "Закрытый репозиторий",
+    play: "Смотреть",
+    missingVideo: "Видеофайл ещё не добавлен",
+    missingHint: "положите его в public/videos/",
+    close: "Закрыть",
+    clipIntro: "Интро",
+    language: "Язык",
+    timeline: "Таймлайн страницы",
+    stack: "Стек",
+    meta: "Данные",
+    footer: "Сделано на Next.js. Таймлайн — карта страницы.",
+  },
 };
 
 export const projects: Project[] = [
@@ -129,6 +175,7 @@ export const projects: Project[] = [
     summary: {
       uz: "Pinterest uslubidagi rasm ilovasi: masonry lenta, qidiruv, sevimlilar, galereyaga yuklab olish, 3 til. iOS va Android.",
       en: "Pinterest-style photo app: masonry feed, search, favorites, save to gallery, 3 languages. iOS and Android.",
+      ru: "Фотоприложение в стиле Pinterest: masonry-лента, поиск, избранное, сохранение в галерею, 3 языка. iOS и Android.",
     },
   },
   {
@@ -140,6 +187,7 @@ export const projects: Project[] = [
     summary: {
       uz: "Shu g'oyaning birinchi, yengil versiyasi. Keyinchalik PinPic shundan o'sib chiqdi.",
       en: "First, lightweight take on the same idea. PinPic grew out of it.",
+      ru: "Первая, лёгкая версия той же идеи. Из неё вырос PinPic.",
     },
   },
 ];
@@ -163,6 +211,7 @@ export const packages: Package[] = [
     summary: {
       uz: "Jadval ichida ishlaydigan qidiruvli dropdown. BLoC bilan boshqariladi, katta ro'yxatlarda tez filtrlaydi.",
       en: "Searchable dropdown for tables, driven by BLoC. Filters large datasets fast.",
+      ru: "Выпадающий список с поиском для таблиц на BLoC. Быстро фильтрует большие наборы данных.",
     },
   },
   {
@@ -174,6 +223,7 @@ export const packages: Package[] = [
     summary: {
       uz: "Sodda va moslashuvchan radio tugmalar guruhi. Bitta widget, istalgan dizayn.",
       en: "Simple, flexible radio button group. One widget, any design.",
+      ru: "Простая и гибкая группа радиокнопок. Один виджет, любой дизайн.",
     },
   },
 ];
@@ -186,51 +236,63 @@ export const cuts: Cut[] = [
     id: "cut-01",
     file: "cut-01.mp4",
     aspect: "9/16",
-    title: { uz: "Target 01", en: "Target 01" },
-    kind: { uz: "Target reklama", en: "Targeted ad" },
+    title: { uz: "Target 01", en: "Target 01", ru: "Таргет 01" },
+    kind: { uz: "Target reklama", en: "Targeted ad", ru: "Таргет-реклама" },
     tools: [],
   },
   {
     id: "cut-02",
     file: "cut-02.mp4",
     aspect: "9/16",
-    title: { uz: "Target 02", en: "Target 02" },
-    kind: { uz: "Target reklama", en: "Targeted ad" },
+    title: { uz: "Target 02", en: "Target 02", ru: "Таргет 02" },
+    kind: { uz: "Target reklama", en: "Targeted ad", ru: "Таргет-реклама" },
     tools: [],
   },
   {
     id: "cut-03",
     file: "cut-03.mp4",
     aspect: "9/16",
-    title: { uz: "Target 03", en: "Target 03" },
-    kind: { uz: "Target reklama", en: "Targeted ad" },
+    title: { uz: "Target 03", en: "Target 03", ru: "Таргет 03" },
+    kind: { uz: "Target reklama", en: "Targeted ad", ru: "Таргет-реклама" },
     tools: [],
   },
   {
     id: "cut-04",
     file: "cut-04.mp4",
     aspect: "9/16",
-    title: { uz: "Target 04", en: "Target 04" },
-    kind: { uz: "Target reklama", en: "Targeted ad" },
+    title: { uz: "Target 04", en: "Target 04", ru: "Таргет 04" },
+    kind: { uz: "Target reklama", en: "Targeted ad", ru: "Таргет-реклама" },
     tools: [],
   },
   {
     id: "cut-05",
     file: "cut-05.mp4",
     aspect: "9/16",
-    title: { uz: "Target 05 (kreativ)", en: "Target 05 (creative)" },
-    kind: { uz: "Target reklama", en: "Targeted ad" },
+    title: { uz: "Target 05 (kreativ)", en: "Target 05 (creative)", ru: "Таргет 05 (креатив)" },
+    kind: { uz: "Target reklama", en: "Targeted ad", ru: "Таргет-реклама" },
     tools: [],
   },
   {
     id: "cut-06",
     file: "cut-06.mp4",
     aspect: "9/16",
-    title: { uz: "Target 06", en: "Target 06" },
-    kind: { uz: "Target reklama", en: "Targeted ad" },
+    title: { uz: "Target 06", en: "Target 06", ru: "Таргет 06" },
+    kind: { uz: "Target reklama", en: "Targeted ad", ru: "Таргет-реклама" },
     tools: [],
   },
 ];
+
+/* "Men haqimda" bo'limidagi raqamlar */
+export const aboutFacts: { value: string; label: Record<Lang, string> }[] = [
+  { value: "2022", label: { uz: "yildan beri mediada", en: "in media since", ru: "в медиа с" } },
+  { value: "2+", label: { uz: "yil professional montaj", en: "years of professional editing", ru: "года профессионального монтажа" } },
+  { value: "15+", label: { uz: "loyiha uchun video", en: "projects delivered", ru: "проектов с видео" } },
+];
+
+/* Mijoz logotiplari. Faylni public/logos/ ga qo'ying (SVG yoki shaffof PNG, bo'yi ~80px),
+   keyin shu ro'yxatga qo'shing. Ro'yxat bo'sh bo'lsa bo'lim ko'rinmaydi.
+   Misol: { name: "Kompaniya nomi", logo: "kompaniya.svg", url: "https://..." } */
+export const clients: { name: string; logo: string; url?: string }[] = [];
 
 export const tools = {
   code: ["Flutter", "Dart", "BLoC", "Firebase", "REST", "Git"],
