@@ -75,12 +75,23 @@
   height: 40px;
   max-width: 160px;
   object-fit: contain;
-  filter: grayscale(1) brightness(1.4);
-  opacity: 0.8;
-  transition: filter 200ms ease, opacity 200ms ease;
+  opacity: 0.85;
+  transition: opacity 200ms ease;
 }
 
 .logos li:hover img {
-  filter: none;
   opacity: 1;
+}
+
+/* Rejimga mos variant: to'q fonda oq, yorug' fonda rangli/qora */
+.forLight {
+  display: none;
+}
+
+:global(html[data-theme="light"]) .forLight {
+  display: block;
+}
+
+:global(html[data-theme="light"]) .forDark {
+  display: none;
 }

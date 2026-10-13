@@ -7,7 +7,7 @@
 
 .top {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   align-items: center;
   gap: 24px;
   padding: 20px 0;
@@ -35,6 +35,24 @@
 
 @keyframes blink {
   50% { opacity: 0.25; }
+}
+
+.theme {
+  appearance: none;
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.theme:hover {
+  color: var(--text);
+  border-color: var(--text);
 }
 
 .lang {
@@ -310,7 +328,7 @@
 
 @media (max-width: 640px) {
   .top {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
   }
   .elapsed {
     display: none;

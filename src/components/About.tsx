@@ -35,9 +35,19 @@ export function About() {
             <span className="track-label mono">{t("clients")}</span>
             <ul className={styles.logos}>
               {clients.map((c) => {
-                const img = (
-                  <Image src={`${basePath}/logos/${c.logo}`} alt={c.name} title={c.name} width={160} height={48} />
+                const logo = (file: string, cls?: string) => (
+                  <Image src={`${basePath}/logos/${file}`} alt={c.name} title={c.name} width={160} height={48} className={cls} />
                 );
+                // Juftlik bo'lsa ikkalasi ham chiziladi, CSS rejimga qarab bittasini ko'rsatadi
+                const img =
+                  typeof c.logo === "string" ? (
+                    logo(c.logo)
+                  ) : (
+                    <>
+                      {logo(c.logo.dark, styles.forDark)}
+                      {logo(c.logo.light, styles.forLight)}
+                    </>
+                  );
                 return (
                   <li key={c.name}>
                     {c.url ? (

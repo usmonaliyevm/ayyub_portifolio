@@ -98,6 +98,11 @@
   border-color: color-mix(in srgb, var(--sage-bright) 60%, transparent);
 }
 
+/* Yorug' rejimda kod klipi aralashmasdan to'q yashil, krem yozuv o'qilsin */
+:global(html[data-theme="light"]) .clipCode {
+  background: var(--sage);
+}
+
 .clip:hover {
   filter: brightness(1.2);
 }
@@ -115,7 +120,7 @@
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text);
+  color: var(--on-accent);
   white-space: nowrap;
 }
 

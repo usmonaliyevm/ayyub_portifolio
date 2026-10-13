@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLang } from "./LangProvider";
 import { useMode } from "./ModeProvider";
+import { useTheme } from "./ThemeProvider";
 import { langs, site } from "@/content/site";
 import { FPS, toTimecode } from "./timecode";
 import styles from "./Hero.module.css";
@@ -10,6 +11,7 @@ import styles from "./Hero.module.css";
 export function Hero() {
   const { lang, setLang, t } = useLang();
   const { open } = useMode();
+  const { theme, toggle } = useTheme();
   const [hovering, setHovering] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
   const rec = useRef<HTMLSpanElement>(null);
@@ -44,6 +46,18 @@ export function Hero() {
           <i className={styles.recDot} />
           REC <span ref={rec}>{toTimecode(0)}</span>
         </span>
+        <button type="button" className={styles.theme} onClick={toggle} aria-label={t("theme")} title={t("theme")} data-cursor={theme === "dark" ? "LIGHT" : "DARK"}>
+          {theme === "dark" ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+            </svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
+          )}
+        </button>
         <div className={styles.lang} role="group" aria-label={t("language")}>
           {langs.map((l) => (
             <button key={l} type="button" onClick={() => setLang(l)} className={lang === l ? styles.langOn : ""} aria-pressed={lang === l}>

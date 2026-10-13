@@ -73,6 +73,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     close: "Yopish",
     clipIntro: "Kirish",
     language: "Til",
+    theme: "Rejimni almashtirish",
     timeline: "Sahifa timeline'i",
     stack: "Texnologiyalar",
     meta: "Ma'lumot",
@@ -116,6 +117,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     close: "Close",
     clipIntro: "Intro",
     language: "Language",
+    theme: "Toggle theme",
     timeline: "Page timeline",
     stack: "Stack",
     meta: "Meta",
@@ -159,6 +161,7 @@ export const ui: Record<Lang, Record<string, string>> = {
     close: "Закрыть",
     clipIntro: "Интро",
     language: "Язык",
+    theme: "Сменить тему",
     timeline: "Таймлайн страницы",
     stack: "Стек",
     meta: "Данные",
@@ -289,10 +292,29 @@ export const aboutFacts: { value: string; label: Record<Lang, string> }[] = [
   { value: "15+", label: { uz: "loyiha uchun video", en: "projects delivered", ru: "проектов с видео" } },
 ];
 
-/* Mijoz logotiplari. Faylni public/logos/ ga qo'ying (SVG yoki shaffof PNG, bo'yi ~80px),
-   keyin shu ro'yxatga qo'shing. Ro'yxat bo'sh bo'lsa bo'lim ko'rinmaydi.
-   Misol: { name: "Kompaniya nomi", logo: "kompaniya.svg", url: "https://..." } */
-export const clients: { name: string; logo: string; url?: string }[] = [];
+/* Mijoz logotiplari, fayllar public/logos/ ichida (shaffof PNG, bo'yi 160px).
+   logo: bitta universal fayl yoki { light, dark } juftlik: light yorug' fonda,
+   dark to'q fonda ko'rsatiladi. Asl fayllar logo-src/ papkasida. */
+export type ClientLogo = string | { light: string; dark: string };
+export const clients: { name: string; logo: ClientLogo; url?: string }[] = [
+  { name: "Diamond", logo: { light: "diamond-light.png", dark: "diamond-dark.png" } },
+  { name: "Street Media", logo: { light: "street-media-light.png", dark: "street-media-dark.png" } },
+  { name: "Raya", logo: { light: "raya-light.png", dark: "raya-dark.png" } },
+  { name: "Sammit Hospital", logo: { light: "sammit-hospital-light.png", dark: "sammit-hospital-dark.png" } },
+  { name: "Al-Kamal", logo: "al-kamal.png" },
+  { name: "Ansor", logo: { light: "ansor-light.png", dark: "ansor-dark.png" } },
+  { name: "Flazzo", logo: { light: "flazzo-light.png", dark: "flazzo-dark.png" } },
+  { name: "BYD Abozor", logo: { light: "byd-abozor-light.png", dark: "byd-abozor-dark.png" } },
+  { name: "Space Coworking", logo: { light: "space-coworking-light.png", dark: "space-coworking-dark.png" } },
+  { name: "OZ Steels", logo: "oz-steels.png" },
+  { name: "Enerza", logo: { light: "enerza-light.png", dark: "enerza-dark.png" } },
+  { name: "IT Park", logo: { light: "it-park-light.png", dark: "it-park-dark.png" } },
+  { name: "Charx", logo: { light: "charx-light.png", dark: "charx-dark.png" } },
+  { name: "Raduga", logo: "raduga.png" },
+  { name: "Qadrdonlar Developments", logo: { light: "qadrdonlar-light.png", dark: "qadrdonlar-dark.png" } },
+  { name: "Alliance Avenue", logo: { light: "alliance-avenue-light.png", dark: "alliance-avenue-dark.png" } },
+  { name: "Sokin", logo: { light: "sokin-light.png", dark: "sokin-dark.png" } },
+];
 
 export const tools = {
   code: ["Flutter", "Dart", "BLoC", "Firebase", "REST", "Git"],

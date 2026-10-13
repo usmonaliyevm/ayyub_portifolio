@@ -17,6 +17,9 @@
   --red-bright: #a51616; /* playhead va kichik belgilar uchun, fonda ko'rinishi uchun */
   --sage: #757d6f;
   --sage-bright: #9aa394;
+  /* qizil/yashil kliplar ustidagi matn, ikkala rejimda ham krem */
+  --on-accent: #eeead7;
+  color-scheme: dark;
   /* Eski nomlar, komponentlar shularga tayanadi */
   --amber: var(--red-bright);
   --amber-ink: var(--text);
@@ -30,6 +33,28 @@
   --timeline-h: 64px;
   --gutter: clamp(16px, 4vw, 56px);
   --maxw: 1240px;
+}
+
+/* Yorug' rejim: krem qog'oz, to'q qizil matn, urg'ular saqlanadi */
+html[data-theme="light"] {
+  --bg: #f4efe3;
+  --bg-deep: #eae3d2;
+  --surface: #fbf8f1;
+  --line: #d6cbb3;
+  --line-soft: #e4dcc9;
+  --text: #2d0000;
+  --muted: #6f6b5d;
+  --red: #a51616;
+  --red-bright: #c41a1a;
+  --sage: #5e6858;
+  --sage-bright: #46523f;
+  color-scheme: light;
+}
+
+html[data-theme="light"] body::after {
+  /* oq shovqin yorug' fonda ko'rinmaydi, teskarisini olamiz */
+  filter: invert(1);
+  opacity: 0.05;
 }
 
 /* Ruscha: Bricolage'da kirill yo'q, next/font'ning Arial zaxirasi uni yutib yuboradi,

@@ -42,3 +42,6 @@ next-env.d.ts
 
 # asl (siqilmagan) videolar, repo'ga kirmaydi
 /video-src/
+
+# asl (katta) logotiplar, repo'ga kirmaydi
+/logo-src/
