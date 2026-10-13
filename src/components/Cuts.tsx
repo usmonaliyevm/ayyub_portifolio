@@ -2,16 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLang } from "./LangProvider";
-import { cuts, type Cut } from "@/content/site";
+import { basePath, cuts, type Cut } from "@/content/site";
 import { toTimecode } from "./timecode";
 import styles from "./Cuts.module.css";
+
+/** Karta "poster"i: 0-kadr ko'pincha qora bo'ladi, shu soniyadagi kadr ko'rsatiladi */
+const POSTER_AT = 1;
+const posterTime = (v: HTMLVideoElement) => Math.min(POSTER_AT, (v.duration || POSTER_AT) / 2);
 
 function Tile({ cut, index, onOpen }: { cut: Cut; index: number; onOpen: (c: Cut) => void }) {
   const { lang, t } = useLang();
   const [missing, setMissing] = useState(false);
   const [tc, setTc] = useState("00:00:00:00");
   const ref = useRef<HTMLVideoElement>(null);
-  const src = `/videos/${cut.file}`;
+  const src = `${basePath}/videos/${cut.file}`;
 
   // Fayl bormi? Server 404 yoki HTML qaytarsa, placeholder ko'rsatamiz.
   // (video onError hydration'dan oldin otilib ketishi mumkin, shuning uchun HEAD)
@@ -37,7 +41,7 @@ function Tile({ cut, index, onOpen }: { cut: Cut; index: number; onOpen: (c: Cut
     const v = ref.current;
     if (!v) return;
     v.pause();
-    v.currentTime = 0;
+    v.currentTime = posterTime(v);
     setTc("00:00:00:00");
   };
   const onTime = () => {
@@ -75,6 +79,9 @@ function Tile({ cut, index, onOpen }: { cut: Cut; index: number; onOpen: (c: Cut
             playsInline
             preload="metadata"
             onError={() => setMissing(true)}
+            onLoadedMetadata={(e) => {
+              e.currentTarget.currentTime = posterTime(e.currentTarget);
+            }}
             onTimeUpdate={onTime}
           />
           <span className={`mono ${styles.tc}`} aria-hidden="true">
@@ -119,7 +126,16 @@ export function CutsGrid() {
         ))}
       </ul>
 
-      <dialog ref={dialog} className={styles.dialog} onClose={() => setOpen(null)}>
+      <dialog
+        ref={dialog}
+        className={styles.dialog}
+        data-aspect={open?.aspect}
+        onClose={() => setOpen(null)}
+        onClick={(e) => {
+          // Backdrop bosilsa (dialogning o'zi target) yopamiz
+          if (e.target === e.currentTarget) hide();
+        }}
+      >
         {open && (
           <div className={styles.dialogBody}>
             <div className={styles.dialogHead}>
@@ -129,7 +145,7 @@ export function CutsGrid() {
               </button>
             </div>
             <video
-              src={`/videos/${open.file}`}
+              src={`${basePath}/videos/${open.file}`}
               controls
               autoPlay
               playsInline

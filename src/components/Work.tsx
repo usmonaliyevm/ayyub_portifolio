@@ -19,7 +19,7 @@ export function WorkList() {
             <div className={styles.main}>
               <h3 className={styles.name}>{p.name}</h3>
               <p className={styles.summary}>{p.summary[lang]}</p>
-              <ul className={styles.stack} aria-label="Stack">
+              <ul className={styles.stack} aria-label={t("stack")}>
                 {p.stack.map((s) => (
                   <li key={s}>{s}</li>
                 ))}
@@ -48,7 +48,7 @@ export function WorkList() {
             <div className={styles.main}>
               <h3 className={`${styles.name} ${styles.pkgName}`}>{p.name}</h3>
               <p className={styles.summary}>{p.summary[lang]}</p>
-              <ul className={styles.stack} aria-label="Meta">
+              <ul className={styles.stack} aria-label={t("meta")}>
                 <li>{p.score} {t("pubScore")}</li>
                 <li>Flutter</li>
               </ul>

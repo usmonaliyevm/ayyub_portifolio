@@ -40,6 +40,13 @@
   transition: transform 160ms ease-out, border-color 180ms ease, box-shadow 180ms ease, opacity 300ms ease, filter 300ms ease;
 }
 
+/* Sensorli qurilmada egilish yo'q */
+@media (hover: none) {
+  .window {
+    transform: none;
+  }
+}
+
 .window:hover {
   border-color: var(--accent);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);

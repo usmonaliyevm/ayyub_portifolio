@@ -15,7 +15,12 @@ export function ModeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fromHash = () => {
       const h = window.location.hash.replace("#", "");
-      if (h === "montaj" || h === "coding") setModeState(h);
+      if (h !== "montaj" && h !== "coding") return;
+      setModeState(h);
+      // Brauzer #montaj id'li element topolmaydi, shuning uchun oynaga o'zimiz boramiz
+      requestAnimationFrame(() => {
+        document.getElementById("work")?.scrollIntoView({ behavior: "instant", block: "start" });
+      });
     };
     fromHash();
     window.addEventListener("hashchange", fromHash);
@@ -24,7 +29,7 @@ export function ModeProvider({ children }: { children: React.ReactNode }) {
 
   const setMode = useCallback((m: Mode) => {
     setModeState(m);
-    const url = m ? `#${m}` : window.location.pathname;
+    const url = m ? `#${m}` : window.location.pathname + window.location.search;
     window.history.replaceState(null, "", url);
   }, []);
 

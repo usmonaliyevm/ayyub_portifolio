@@ -118,7 +118,7 @@ export function Timeline({ clips }: { clips: Clip[] }) {
   };
 
   return (
-    <nav className={styles.bar} aria-label="Page timeline">
+    <nav className={styles.bar} aria-label={t("timeline")}>
       <div className={styles.tc}>
         <span className={styles.rec} aria-hidden="true" />
         <span className={styles.tcText}>{toTimecode(head * TOTAL)}</span>
@@ -149,9 +149,13 @@ export function Timeline({ clips }: { clips: Clip[] }) {
                   e.preventDefault();
                   return;
                 }
-                if (!s.onClick) return;
                 e.preventDefault();
-                s.onClick();
+                if (s.onClick) {
+                  s.onClick();
+                  return;
+                }
+                // Hash'ni o'zgartirmaymiz: URL faqat ochiq oynani (#montaj/#coding) ko'rsatadi
+                document.getElementById(s.el ?? s.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
               className={`${styles.clip} ${s.track === "c" ? styles.clipCode : styles.clipVideo} ${isActive ? styles.active : ""}`}
               style={{ left: `${left}%`, width: `calc(${width}% - 3px)`, "--i": i } as React.CSSProperties}

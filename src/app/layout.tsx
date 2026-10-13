@@ -12,7 +12,7 @@ const bricolage = Bricolage_Grotesque({
   axes: ["wdth", "opsz"],
 });
 const plex = IBM_Plex_Sans({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-plex",
 });
@@ -22,20 +22,40 @@ const jet = JetBrains_Mono({
   variable: "--font-jet",
 });
 
+/* Sayt origin'i build vaqtida env'dan keladi (GitHub Actions); lokalda localhost.
+   basePath'ni Next o'zi qo'shadi, shuning uchun bu yerda faqat domen. */
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+const title = `${site.name} — Flutter developer & video editor`;
+const description =
+  "Portfolio of Muhammadayyub Usmonaliyev: Flutter mobile apps and video editing. Reels, ads, YouTube.";
+
 export const metadata: Metadata = {
-  title: `${site.name} — Flutter developer & video editor`,
-  description:
-    "Portfolio of Muhammadayyub Usmonaliyev: Flutter mobile apps and video editing. Reels, ads, YouTube.",
+  metadataBase: new URL(baseUrl),
+  title,
+  description,
   openGraph: {
-    title: `${site.name} — Flutter developer & video editor`,
-    description: "Flutter apps and video cuts.",
+    title,
+    description,
     type: "website",
+    siteName: site.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
   },
 };
 
+/* JS bor-yo'qligini CSS'ga aytadi: html.js bo'lmasa reveal elementlar yashirilmaydi */
+const jsFlag = "document.documentElement.classList.add('js')";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${plex.variable} ${jet.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${plex.variable} ${jet.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: jsFlag }} />
+      </head>
       <body>
         <LangProvider>
           <ModeProvider>

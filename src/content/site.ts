@@ -1,5 +1,8 @@
 export type Lang = "uz" | "en";
 
+/* public/ ichidagi fayllarga qo'lda yo'l yozganda shu prefiks kerak (GitHub Pages basePath) */
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export type Project = {
   id: string;
   name: string;
@@ -24,9 +27,10 @@ export const site = {
   name: "Muhammadayyub Usmonaliyev",
   handle: "usmonaliyevm",
   github: "https://github.com/usmonaliyevm",
-  // Shu ikkitasini o'zingizniki bilan almashtiring
   telegram: "https://t.me/usmonaliyevm",
-  email: "hello@example.com",
+  email: "uzayyub2007@gmail.com",
+  /* Footer uchun; statik sahifada new Date() ishlatib bo'lmaydi */
+  year: 2026,
 };
 
 export const ui: Record<Lang, Record<string, string>> = {
@@ -66,6 +70,10 @@ export const ui: Record<Lang, Record<string, string>> = {
     missingHint: "public/videos/ ichiga joylang",
     close: "Yopish",
     clipIntro: "Kirish",
+    language: "Til",
+    timeline: "Sahifa timeline'i",
+    stack: "Texnologiyalar",
+    meta: "Ma'lumot",
     footer: "Next.js bilan qurilgan. Timeline — sahifa xaritasi.",
   },
   en: {
@@ -104,6 +112,10 @@ export const ui: Record<Lang, Record<string, string>> = {
     missingHint: "drop it into public/videos/",
     close: "Close",
     clipIntro: "Intro",
+    language: "Language",
+    timeline: "Page timeline",
+    stack: "Stack",
+    meta: "Meta",
     footer: "Built with Next.js. The timeline is the page map.",
   },
 };

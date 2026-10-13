@@ -9,6 +9,7 @@ import styles from "./Modes.module.css";
 
 /** 3D egilish: kursor o'rniga qarab --rx/--ry/--gx/--gy o'rnatiladi */
 function tilt(e: React.PointerEvent<HTMLElement>) {
+  if (e.pointerType !== "mouse") return;
   const el = e.currentTarget;
   const r = el.getBoundingClientRect();
   const px = (e.clientX - r.left) / r.width;
@@ -80,7 +81,7 @@ export function Modes() {
                 onPointerMove={tilt}
                 onPointerLeave={untilt}
                 aria-expanded={isOpen}
-                aria-controls={`panel-${w.id}`}
+                aria-controls={isOpen ? `panel-${w.id}` : undefined}
                 data-reveal
                 data-cursor={isOpen ? t("closeWindow").toUpperCase() : t("openWindow").toUpperCase()}
               >

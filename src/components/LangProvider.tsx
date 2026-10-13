@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useSyncExternalStore } from "react";
 import { ui, type Lang } from "@/content/site";
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
@@ -11,37 +11,43 @@ const LangContext = createContext<Ctx>({
   t: (k) => k,
 });
 
-export function LangProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
+/* Kichik tashqi store: localStorage + brauzer tili. Serverda doim "en". */
+const listeners = new Set<() => void>();
+const subscribe = (fn: () => void) => {
+  listeners.add(fn);
+  return () => listeners.delete(fn);
+};
+const isLang = (v: unknown): v is Lang => v === "uz" || v === "en";
 
-  useEffect(() => {
-    let initial: Lang = "en";
-    try {
-      const saved = localStorage.getItem("lang");
-      if (saved === "uz" || saved === "en") initial = saved;
-      else if (/^(uz|ru)/i.test(navigator.language)) initial = "uz";
-    } catch {}
-    setLangState(initial);
-  }, []);
+function readLang(): Lang {
+  try {
+    const saved = localStorage.getItem("lang");
+    if (isLang(saved)) return saved;
+    if (/^(uz|ru)/i.test(navigator.language)) return "uz";
+  } catch {}
+  return "en";
+}
+
+function writeLang(l: Lang) {
+  try {
+    localStorage.setItem("lang", l);
+  } catch {}
+  listeners.forEach((fn) => fn());
+}
+
+const serverLang = (): Lang => "en";
+
+export function LangProvider({ children }: { children: React.ReactNode }) {
+  const lang = useSyncExternalStore(subscribe, readLang, serverLang);
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
-  const setLang = (l: Lang) => {
-    setLangState(l);
-    try {
-      localStorage.setItem("lang", l);
-    } catch {}
-  };
+  const setLang = useCallback((l: Lang) => writeLang(l), []);
+  const t = useCallback((k: string) => ui[lang][k] ?? k, [lang]);
 
-  const t = (k: string) => ui[lang][k] ?? k;
-
-  return (
-    <LangContext.Provider value={{ lang, setLang, t }}>
-      {children}
-    </LangContext.Provider>
-  );
+  return <LangContext.Provider value={{ lang, setLang, t }}>{children}</LangContext.Provider>;
 }
 
 export const useLang = () => useContext(LangContext);

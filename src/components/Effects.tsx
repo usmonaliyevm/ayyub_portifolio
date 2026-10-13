@@ -1,7 +1,24 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import styles from "./Effects.module.css";
+
+const FINE = "(hover: hover) and (pointer: fine)";
+const REDUCE = "(prefers-reduced-motion: reduce)";
+
+/* Maxsus kursor faqat sichqonchali va harakatga ruxsat bergan qurilmalarda */
+function subscribeCursor(fn: () => void) {
+  const a = window.matchMedia(FINE);
+  const b = window.matchMedia(REDUCE);
+  a.addEventListener("change", fn);
+  b.addEventListener("change", fn);
+  return () => {
+    a.removeEventListener("change", fn);
+    b.removeEventListener("change", fn);
+  };
+}
+const cursorEnabled = () => window.matchMedia(FINE).matches && !window.matchMedia(REDUCE).matches;
+const cursorDisabled = () => false;
 
 /**
  * Sahifa darajasidagi effektlar:
@@ -12,11 +29,11 @@ export function Effects() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
   const [label, setLabel] = useState("");
-  const [enabled, setEnabled] = useState(false);
+  const enabled = useSyncExternalStore(subscribeCursor, cursorEnabled, cursorDisabled);
 
   // 1) Reveal
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = window.matchMedia(REDUCE).matches;
     const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     if (reduce) {
       els.forEach((el) => el.classList.add("is-in"));
@@ -45,21 +62,22 @@ export function Effects() {
     };
   }, []);
 
-  // 2) Kursor
+  // 2) Kursor. html.has-cursor klassi CSS'da tizim kursorini yashiradi.
   useEffect(() => {
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduce) return;
-    setEnabled(true);
+    if (!enabled) return;
+    document.documentElement.classList.add("has-cursor");
 
     let tx = -100, ty = -100, rx = -100, ry = -100;
     let raf = 0;
+    const place = () => {
+      if (dot.current) dot.current.style.transform = `translate(${tx}px, ${ty}px)`;
+    };
     const move = (e: PointerEvent) => {
       tx = e.clientX;
       ty = e.clientY;
       const target = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-cursor]");
       setLabel(target?.dataset.cursor ?? "");
-      if (dot.current) dot.current.style.transform = `translate(${tx}px, ${ty}px)`;
+      place();
     };
     const loop = () => {
       rx += (tx - rx) * 0.18;
@@ -70,16 +88,19 @@ export function Effects() {
     const leave = () => {
       tx = -100;
       ty = -100;
+      setLabel("");
+      place();
     };
     window.addEventListener("pointermove", move, { passive: true });
     document.documentElement.addEventListener("mouseleave", leave);
     raf = requestAnimationFrame(loop);
     return () => {
+      document.documentElement.classList.remove("has-cursor");
       window.removeEventListener("pointermove", move);
       document.documentElement.removeEventListener("mouseleave", leave);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [enabled]);
 
   if (!enabled) return null;
   return (

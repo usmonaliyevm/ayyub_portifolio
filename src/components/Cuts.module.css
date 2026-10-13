@@ -191,8 +191,23 @@
   max-height: 92vh;
 }
 
+/* Vertikal video: dialog video balandligiga (80vh) mos toraytiriladi */
+.dialog[data-aspect="9/16"] {
+  width: min(92vw, calc(80vh * 9 / 16 + 2px));
+}
+
 .dialog::backdrop {
   background: rgba(0, 0, 0, 0.7);
+}
+
+/* Dialog top-layer'da, maxsus kursor uning ostida qoladi: tizim kursorini qaytaramiz */
+.dialog[open],
+.dialog[open] * {
+  cursor: auto !important;
+}
+
+.dialog[open] button {
+  cursor: pointer !important;
 }
 
 .dialogBody {

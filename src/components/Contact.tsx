@@ -32,7 +32,7 @@ export function Contact() {
         </div>
 
         <p className={`mono ${styles.footer}`}>
-          © 2026 {site.name} · {t("footer")}
+          © {site.year} {site.name} · {t("footer")}
         </p>
       </div>
     </section>

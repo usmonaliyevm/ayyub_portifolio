@@ -4,28 +4,27 @@ import { useEffect, useRef, useState } from "react";
 import { useLang } from "./LangProvider";
 import { useMode } from "./ModeProvider";
 import { site } from "@/content/site";
-import { toTimecode } from "./timecode";
+import { FPS, toTimecode } from "./timecode";
 import styles from "./Hero.module.css";
 
 export function Hero() {
   const { lang, setLang, t } = useLang();
   const { open } = useMode();
-  const [elapsed, setElapsed] = useState(0);
   const [hovering, setHovering] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
+  const rec = useRef<HTMLSpanElement>(null);
 
-  // REC hisoblagich: sahifa ochilganidan beri
+  // REC hisoblagich: sahifa ochilganidan beri. State emas, to'g'ridan-to'g'ri DOM,
+  // shunda butun Hero har kadrda qayta render bo'lmaydi.
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
     const start = performance.now();
-    let id = 0;
-    const tick = () => {
-      setElapsed((performance.now() - start) / 1000);
-      id = requestAnimationFrame(tick);
-    };
-    id = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(id);
+    const id = window.setInterval(() => {
+      if (document.hidden || !rec.current) return;
+      rec.current.textContent = toTimecode((performance.now() - start) / 1000);
+    }, 1000 / FPS);
+    return () => window.clearInterval(id);
   }, []);
 
   // A/B wipe: kursor x o'rni ismni ikki rangga bo'ladi (chap: kod, o'ng: montaj)
@@ -43,9 +42,9 @@ export function Hero() {
         <span className={`mono ${styles.handle}`}>{site.handle}</span>
         <span className={`mono ${styles.elapsed}`}>
           <i className={styles.recDot} />
-          REC {toTimecode(elapsed)}
+          REC <span ref={rec}>{toTimecode(0)}</span>
         </span>
-        <div className={styles.lang} role="group" aria-label="Language">
+        <div className={styles.lang} role="group" aria-label={t("language")}>
           <button type="button" onClick={() => setLang("uz")} className={lang === "uz" ? styles.langOn : ""} aria-pressed={lang === "uz"}>
             UZ
           </button>
@@ -64,7 +63,7 @@ export function Hero() {
       >
         {/* Ism ikki qatlamda: pastki krem, ustki (chap tomon) kulrang-yashil, wipe bilan kesiladi */}
         <h1 className={styles.name}>
-          <span className={styles.layerBase} aria-hidden="false">
+          <span className={styles.layerBase}>
             <span className={styles.first}>Muhammadayyub</span>
             <span className={styles.last}>Usmonaliyev</span>
           </span>
